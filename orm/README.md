@@ -14,3 +14,49 @@ add your test case directly to a module's unit tests (using the template class),
 Although it's perfectly acceptable as a reproducer, lean towards ORMUnitTestCase whenever possible.
 
 **For a detailed step-by-step tutorial about how you should be using our test case templates check out the [following article](http://in.relation.to/2016/01/14/hibernate-jpa-test-case-template/)**.
+
+
+## JoinColumnOrFormula
+
+```shell
+Fetch User entities
+Hibernate: 
+    select
+        u1_0.id,
+        c1_0.id,
+        c1_0.is_default,
+        c1_0.primaryLanguage,
+        c1_0.name,
+        u1_0.firstName,
+        u1_0.language,
+        u1_0.lastName 
+    from
+        users u1_0 
+    left join
+        countries c1_0 
+            on c1_0.is_default=1 
+            and c1_0.primaryLanguage=u1_0.language 
+    where
+        u1_0.id=?
+JPAUnitTestCase.User(id=1, firstName=John, lastName=Doe, language=English, country=JPAUnitTestCase.Country(id=1, name=United States, primaryLanguage=English, _default=true))
+Hibernate: 
+    select
+        u1_0.id,
+        c1_0.id,
+        c1_0.is_default,
+        c1_0.primaryLanguage,
+        c1_0.name,
+        u1_0.firstName,
+        u1_0.language,
+        u1_0.lastName 
+    from
+        users u1_0 
+    left join
+        countries c1_0 
+            on c1_0.is_default=1 
+            and c1_0.primaryLanguage=u1_0.language 
+    where
+        u1_0.id=?
+JPAUnitTestCase.User(id=2, firstName=Vlad, lastName=Mihalcea, language=Romanian, country=JPAUnitTestCase.Country(id=40, name=Romania, primaryLanguage=Romanian, _default=true))
+
+```
